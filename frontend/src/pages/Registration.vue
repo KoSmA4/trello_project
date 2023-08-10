@@ -1,18 +1,19 @@
 <template>
   <div class="container">
     <div class="auth">
-      <h2>Авторизация</h2>
+      <h2>Регистрация</h2>
       <form action="">
         <p>Логин</p>
         <my-input placeholder="Введите ваш логин"/>
         <p>Пароль</p>
         <my-input placeholder="Введите ваш пароль"/>
-        <my-button style="padding: 8px 40px;">Войти</my-button>
-        <a @click.stop="$router.push('/registration')">Регистрация</a>
+        <p>Подтвердите пароль</p>
+        <my-input placeholder="Подтвердите ваш пароль"/>
+        <my-button style="margin-bottom: 70px;">Зарегистрироваться</my-button>
+        <a @click.stop="$router.push('/authorization')">Вход</a>
       </form>
     </div>
   </div>
-
 </template>
 
 <script>
@@ -20,12 +21,7 @@ import MyButton from "@/components/UI/MyButton.vue";
 import MyInput from "@/components/UI/MyInput.vue";
 
 export default {
-  components: {MyInput, MyButton},
-  data() {
-    return {
-      showNavBar: false
-    }
-  },
+  components: {MyInput, MyButton}
 
 }
 </script>
@@ -66,5 +62,4 @@ a{
   text-align: center;
 
 }
-
 </style>
