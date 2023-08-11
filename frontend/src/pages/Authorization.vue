@@ -4,11 +4,16 @@
       <h2>Авторизация</h2>
       <form action="">
         <p>Логин</p>
-        <my-input placeholder="Введите ваш логин"/>
+        <my-input placeholder="Введите ваш логин" v-focus/>
         <p>Пароль</p>
         <my-input placeholder="Введите ваш пароль"/>
-        <my-button style="padding: 8px 40px;">Войти</my-button>
-        <a @click.stop="$router.push('/registration')">Регистрация</a>
+        <my-button
+            type="submit"
+
+            style="padding: 8px 40px;"
+          >Войти
+        </my-button>
+        <a @click="$router.push('/registration')">Регистрация</a>
       </form>
     </div>
   </div>
@@ -32,7 +37,7 @@ export default {
 
 <style scoped>
 .container{
-  height: 100vh;
+  height: 91vh;
   display: flex;
   align-items: center;
   justify-content: center;
