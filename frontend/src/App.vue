@@ -1,9 +1,6 @@
 <template>
-  <div>
-  <nav-bar :show-nav-bar="showNavBar"></nav-bar>
-
-    <router-view></router-view>
-
+  <div class="app">
+    <router-view/>
   </div>
 </template>
 
@@ -32,5 +29,8 @@ export default {
 }
 body{
   background-color: #2F5377;
+}
+.app{
+  height: 100%;
 }
 </style>

@@ -1,64 +1,65 @@
 <template>
   <div class="container">
     <div class="auth">
-      <form @submit.prevent="registration">
-        <h2>Регистрация</h2>
+      <form @submit.prevent="login" action="">
+        <h2>Авторизация</h2>
         <p>Логин</p>
-        <input placeholder="Введите ваш логин" id="name" v-model="form.username" v-focus/>
+        <input placeholder="Введите ваш логин" v-model="form.username" v-focus/>
         <p>Пароль</p>
-        <input placeholder="Введите ваш пароль" id="password" v-model="form.password"/>
-        <p>Подтвердите пароль</p>
-        <input placeholder="Подтвердите ваш пароль" id="password_confirmation" v-model="form.password_repeat"/>
-        <my-button>
-          Зарегистрироваться
+        <input placeholder="Введите ваш пароль" v-model="form.password"/>
+        <my-button
+            style="padding: 8px 40px;"
+        >Войти
         </my-button>
+        <!--Вот тут обрабатыва ошибки до запроса на сервер-->
         <div v-if="errors" class="errors">
           <p v-for="(error, field) in errors" :key="field">
             {{ error[0] }}
           </p>
-
         </div>
+
       </form>
-      <router-link to="/login" class="link">Вход</router-link>
+      <router-link to="/registration" class="link">Регистрация</router-link>
     </div>
   </div>
+
 </template>
 
 <script>
 import MyButton from "@/components/UI/MyButton.vue";
 import MyInput from "@/components/UI/MyInput.vue";
+import axios from "axios";
 import authService from "@/services/auth.service";
 
 export default {
   components: {MyInput, MyButton},
+  name: "Login",
   data() {
     return {
       form: {
-        username: '',
-        password: '',
-        password_repeat: '',
+        username: "",
+        password: ""
       },
+
       errors: null
-    };
+    }
   },
   methods: {
-    async registration() {
-      const {success, errors} = await authService.register(this.form);
+    async login() {
+      const {success, errors} = await authService.login(this.form);
       if (success) {
         this.$router.push({name: 'home'})
       } else {
         this.errors = errors;
       }
-    },
-  },
-
+    }
+  }
 }
 </script>
 
 <style scoped>
 .container {
-  height: 89vh;
-  display: flex;
+//height: 89vh; display: flex;
   align-items: center;
   justify-content: center;
 }
@@ -76,6 +77,11 @@ export default {
   justify-content: space-between;
 }
 
+form {
+  display: flex;
+  flex-direction: column;
+}
+
 input {
   background-color: #F5F5F5;
   border: none;
@@ -87,11 +93,6 @@ input {
 
 input:focus {
   outline: none;
-}
-
-form {
-  display: flex;
-  flex-direction: column;
 }
 
 h2 {
@@ -120,13 +121,15 @@ p {
 }
 
 .errors p {
-  padding-bottom: 0;
   color: #cc3131;
   margin: 0 -10px;
+  padding-bottom: 0;
+
 }
 
 .errors p:nth-child(1) {
   padding-bottom: 6px;
 }
+
 
 </style>

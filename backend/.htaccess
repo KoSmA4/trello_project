@@ -1,0 +1,27 @@
+Options +FollowSymLinks
+RewriteEngine On
+
+# Отключение добавления index.php к URL
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php/$1 [L]
+RewriteRule (.*) /web/$1
+
+# Настройка удаления index.php из URL
+RewriteCond %{THE_REQUEST} ^GET\ /index\.php [NC]
+RewriteRule ^index\.php(.*)$ $1 [R=301,NE,L]
+
+#Options +FollowSymLinks
+#IndexIgnore */*
+#RewriteEngine on
+#
+#RewriteCond %{REQUEST_URI} !^/(web)
+#RewriteRule ^assets/(.*)$ /web/assets/$1 [L]
+#RewriteRule ^css/(.*)$ web/css/$1 [L]
+#RewriteRule ^js/(.*)$ web/js/$1 [L]
+#RewriteRule ^images/(.*)$ web/images/$1 [L]
+#RewriteRule (.*) /web/$1
+#
+#RewriteCond %{REQUEST_FILENAME} !-f
+#RewriteCond %{REQUEST_FILENAME} !-d
+#RewriteRule . /index.php

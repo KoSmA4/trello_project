@@ -12,7 +12,6 @@ export default {
 
 <style scoped>
 .btn{
-
   height: 40px;
   padding: 8px;
   border-radius: 8px;
@@ -23,6 +22,6 @@ export default {
   border: none;
   cursor: pointer;
   align-self: center;
-  margin-bottom: 150px;
+  margin-bottom: 15px;
 }
 </style>

@@ -2,7 +2,7 @@
 
 return [
     'class' => 'yii\db\Connection',
-    'dsn' => 'pgsql:host=localhost;dbname=postgres',
+    'dsn' => 'pgsql:host=localhost;dbname=trelloDB',
     'username' => 'postgres',
     'password' => '',
     'charset' => 'utf8',

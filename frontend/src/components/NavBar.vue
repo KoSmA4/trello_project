@@ -1,17 +1,25 @@
 <template>
-  <div class="navbar" v-if="showNavBar">
+  <div class="navbar">
+    <div class="navbar__greetings">
+      Приветствую, {{ user.username }}
+      <a href="" @click="logout">Logout</a>
+    </div>
     <div class="navbar__btns" @click="$router.push('/')">
       <button @click.stop="$router.push('/client')">Клиенты</button>
-      <button @click.stop="$router.push('/working-space')">Рабочее пространство</button>
-      <button @click.stop="$router.push('/authorization')">Авторизация</button>
+      <button @click.stop="$router.push('/Home')">Рабочее пространство</button>
+      <button @click.stop="$router.push('/login')">Авторизация</button>
     </div>
   </div>
 </template>
 
 <script>
 import router from "@/router/router";
+import authService from "@/services/auth.service";
 
 export default {
+  props: {
+    user: Object
+  },
   methods: {
     getRouter() {
       return router;
@@ -19,24 +27,24 @@ export default {
     navigateToRoute(route) {
       this.getRouter().push(route);
     },
-
-  },
-  props: {
-    showNavBar: {
-      type: Boolean,
-      default: true
+    logout(){
+      authService.logout();
     }
   },
+
 
 }
 </script>
 
 <style scoped>
-
-
 .navbar {
   width: 100%;
   background-color: #123456;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 10px;
+  color: #f1f1f1;
 }
 
 .navbar__btns {
@@ -49,12 +57,19 @@ button {
   width: 131px;
   background-color: #123456;
   border: none;
-  color: #f1f1f1;
   font-size: 15px;
   padding: 8px;
+  color: #f1f1f1;
+
 }
 
 button:hover {
   cursor: pointer;
 }
+
+a{
+  color: #f1f1f1;
+  padding-left: 20px;
+}
+
 </style>

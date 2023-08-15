@@ -9,19 +9,23 @@ $config = [
     'bootstrap' => ['log'],
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
-        '@npm'   => '@vendor/npm-asset',
+        '@npm' => '@vendor/npm-asset',
     ],
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => '8r7XAy7wby2ZAT9GVD4IFtP1zwvFtzbW',
+            'parsers' => [
+                'application/json' => \yii\web\JsonParser::class
+            ]
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
         'user' => [
             'identityClass' => 'app\models\User',
-            'enableAutoLogin' => true,
+            'enableAutoLogin' => false,
+            'enableSession' => false,
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
@@ -43,38 +47,26 @@ $config = [
             ],
         ],
         'db' => $db,
-        'response' => [
-            'class' => 'yii\web\Response',
-            'on beforeSend' => function ($event) {
-                $response = $event->sender;
-                $response->headers->set('Access-Control-Allow-Origin', '*');
-                $response->headers->set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-                $response->headers->set('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-            },
-        ],
-        /*
+        // Настройка ЧПУ
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                [
+                    'class' => \yii\rest\UrlRule::class,
+                    'pluralize' => false,
+                    'controller' => ['api/task'],
+                ]
             ],
         ],
-        */
+
+    ],
+    'modules' => [
+        'api' => [
+            'class' => \app\modules\api\Module::class
+        ]
     ],
     'params' => $params,
-    'modules' => [
-        'cors' => [
-            'class' => \bryglen\yii2\cors\CorsModule::class,
-            'corsFilter' => [
-                'class' => \yii\filters\Cors::class,
-                'cors' => [
-                    'Origin' => ['*'], // Замените * на список разрешенных доменов
-                    'Access-Control-Request-Method' => ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'],
-                    'Access-Control-Request-Headers' => ['*'],
-                ],
-            ],
-        ],
-    ],
 ];
 
 if (YII_ENV_DEV) {
