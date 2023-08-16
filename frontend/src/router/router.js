@@ -9,6 +9,7 @@ import Home from "@/pages/Home.vue";
 import Login from "@/pages/Login.vue";
 import authService from "@/services/auth.service";
 
+
 const routes = [
     {
         path: '/',
@@ -39,15 +40,11 @@ const routes = [
                 path: 'login',
                 component: Login,
             },
-            {
-                path: 'home',
-                redirect: '/home',
-                component: Home,
-            },
         ]
     },
     {
         path: '/login',
+        name: 'login',
         redirect: '/auth/login',
     },
     {
@@ -58,13 +55,6 @@ const routes = [
         path: '/client',
         redirect: '/home/client',
     },
-    // После регистрации добавить эту маршрутизацию
-
-    // {
-    //     path: '/working-space',
-    //     component: WorkingSpace,
-    // },
-
 ]
 
 const router = createRouter({
@@ -73,17 +63,12 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-    console.log(to, from);
     if (to.name === 'home' && !authService.isLoggedIn()) {
-        next({name: 'login'});
-    }
-    // else if (authService.isLoggedIn() && to.name !== 'home') {
-    //     next({name: 'home'});
-    // }
-    else {
+        next({name: 'login'})
+    } else {
         next();
     }
-    next();
 });
+
 
 export default router

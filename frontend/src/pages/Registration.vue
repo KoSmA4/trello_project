@@ -9,7 +9,7 @@
         <input placeholder="Введите ваш пароль" id="password" v-model="form.password"/>
         <p>Подтвердите пароль</p>
         <input placeholder="Подтвердите ваш пароль" id="password_confirmation" v-model="form.password_repeat"/>
-        <my-button>
+        <my-button style="margin-bottom: 8px;">
           Зарегистрироваться
         </my-button>
         <div v-if="errors" class="errors">
@@ -115,18 +115,19 @@ p {
 .errors {
 //margin-bottom: 15px; padding: 15px 15px; color: #fff;
   border-radius: 6px;
-  font-size: 14px;
+
   text-align: center;
 }
 
 .errors p {
-  padding-bottom: 0;
   color: #cc3131;
   margin: 0 -10px;
+  font-size: 17px;
+  padding-bottom: 6px;
 }
 
-.errors p:nth-child(1) {
-  padding-bottom: 6px;
+.errors p:last-child {
+  padding-bottom: 0;
 }
 
 </style>

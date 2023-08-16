@@ -1,6 +1,6 @@
 <template>
-  <div class="container">
-    <TaskList></TaskList>
+  <div class="home-container">
+    <TaskList/>
   </div>
 </template>
 
@@ -10,21 +10,21 @@ import TaskList from "@/components/TaskList.vue";
 
 export default {
   components: {TaskList, Task},
-  data() {
-    return {
-      tasks: [{header: 'Заголовок-тест', description: 'Описание-тест'}]
-    }
-  }
+  // data() {
+  //   return {
+  //     tasks: [{header: 'Заголовок-тест', description: 'Описание-тест'}]
+  //   }
+  // }
 }
 </script>
 
 <style scoped>
-.container {
-  background-color: #406B96;
+.home-container {
   border-radius: 14px;
-  height: 660px;
-  margin: 12px;
+  min-height: 125px;
   color: #123456;
-  padding: 23px;
+  background-color: #406B96;
+  margin: 12px;
+  padding: 23px 23px 13px 23px;
 }
 </style>
