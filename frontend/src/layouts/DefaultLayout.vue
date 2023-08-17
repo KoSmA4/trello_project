@@ -7,7 +7,7 @@
 
 <script>
 import NavBar from "@/components/NavBar.vue";
-import authService from "@/services/auth.service";
+import {userFunction} from "@/hooks/userFunctions";
 
 export default {
   components: {NavBar},
@@ -16,8 +16,11 @@ export default {
       user: {},
     }
   },
-  async mounted() {
-    this.user = await authService.getCurrentUser();
+  setup(){
+    const {user} = userFunction();
+    return {
+      user
+    };
   }
 }
 </script>

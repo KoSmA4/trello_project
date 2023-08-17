@@ -20,20 +20,14 @@ export default {
   props: {
     user: Object
   },
-  methods: {
-    getRouter() {
-      return router;
-    },
-    navigateToRoute(route) {
-      this.getRouter().push(route);
-    },
-    logout(){
-      authService.logout();
+  setup(){
+    const getRouter = () => router;
+    const logout = () => authService.logout();
+
+    return {
+      getRouter, logout
     }
-  },
-
-
-}
+  },}
 </script>
 
 <style scoped>

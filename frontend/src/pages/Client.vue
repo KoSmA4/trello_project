@@ -4,12 +4,12 @@
     <router-view/>
     <h2>Клиенты</h2>
 
-    <div class="table" v-if="this.users.length > 0">
+    <div class="table" v-if="users.length > 0">
       <div class="id first">ID</div>
       <div class="login first">Login</div>
       <div class="access_token first">Access_token</div>
       <div class="test_table">
-        <div class="table__users" v-for="user in users">
+        <div class="table__users"  v-for="user in users">
           <div class="table__id"> {{ user.id }}</div>
           <div class="table__login"> {{ user.username }}</div>
           <div class="table__access_token"> {{ user.access_token }}</div>
@@ -24,8 +24,8 @@
 </template>
 
 <script>
-import authService from "@/services/auth.service";
 import NavBar from "@/App.vue";
+import {userFunction} from "@/hooks/userFunctions";
 
 export default {
   components: {NavBar},
@@ -35,9 +35,12 @@ export default {
     }
   },
 
-  async mounted() {
-    this.users = await authService.getUsers();
-  }
+  setup(){
+    const {users} = userFunction();
+    return {
+      users
+    };
+  },
 }
 </script>
 

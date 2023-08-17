@@ -11,7 +11,6 @@
             style="padding: 8px 40px;"
         >Войти
         </my-button>
-        <!--Вот тут обрабатыва ошибки до запроса на сервер-->
         <div v-if="errors" class="errors">
           <p v-for="(error, field) in errors" :key="field">
             {{ error[0] }}
@@ -28,39 +27,31 @@
 <script>
 import MyButton from "@/components/UI/MyButton.vue";
 import MyInput from "@/components/UI/MyInput.vue";
-import axios from "axios";
-import authService from "@/services/auth.service";
+import {userAuthorization} from "@/hooks/authorization"
+import {ref} from "vue";
+
 
 export default {
   components: {MyInput, MyButton},
   name: "Login",
-  data() {
+  setup() {
+    const form = ref({
+      username: "",
+      password: ""
+    });
+    // let errors = ref(null);
+    const {login, errors} = userAuthorization(form);
     return {
-      form: {
-        username: "",
-        password: ""
-      },
-
-      errors: null
-    }
-  },
-  methods: {
-    async login() {
-      const {success, errors} = await authService.login(this.form);
-      if (success) {
-        this.$router.push({name: 'home'})
-      } else {
-        this.errors = errors;
-      }
-    }
+      form,
+      errors,
+      login
+    };
   }
 }
 </script>
 
 <style scoped>
 .container {
-//height: 89vh; display: flex;
-  align-items: center;
   justify-content: center;
 }
 
@@ -114,8 +105,7 @@ p {
 }
 
 .errors {
-//margin-bottom: 15px; padding: 15px 15px; color: #fff;
-  border-radius: 6px;
+//margin-bottom: 15px; padding: 15px 15px; color: #fff; border-radius: 6px;
   font-size: 14px;
   text-align: center;
 }

@@ -32,24 +32,6 @@ const authService = {
             }
         }
     },
-
-    async getCurrentUser(){
-        if(!this.user){
-            const {status, data} = await httpClient.get('/user/data');
-            if(status === 200){
-                this.user = data;
-            }
-        }
-        return this.user;
-    },
-    async getUsers(){
-        const {status, data} = await httpClient.get('/user/get-users');
-        if(status === 200){
-            this.users = data;
-        }
-        // debugger
-        return this.users;
-    },
     setUser(user) {
         this.user = user;
         localStorage.setItem('ACCESS_TOKEN', user.access_token)

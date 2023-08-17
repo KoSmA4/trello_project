@@ -4,7 +4,6 @@
       <div class="task__header" contenteditable="" style="cursor: text" @blur="headerChanged">
         {{ task.header }}
       </div>
-      <!--Временно, эта кнопка с точками будет удалять таск-->
       <img
           class="task__button"
           src="@/images/cross.svg"
@@ -19,6 +18,8 @@
 </template>
 
 <script>
+import {ref} from "vue";
+
 export default {
   props: {
     task: {
@@ -26,27 +27,32 @@ export default {
       required: true,
     },
   },
-  methods: {
-    // Удаляю таск в родителе
-    deleteTask(){
-      this.$emit('deleteTask', this.task)
-    },
-    headerChanged($event){
-      this.task.header = $event.target.innerHTML
-      this.$emit('noteUpdated', this.task)
-    },
-    descriptionChanged($event){
-      this.task.description = $event.target.innerHTML
-      this.$emit('noteUpdated', this.task)
-    },
+  setup(props, {emit}){
+    const task = ref(props)
+    const deleteTask = () => {
+      emit('deleteTask', task)
+    }
+    const headerChanged = ($event) =>{
+      task.header = $event.target.innerHTML
+      emit('noteUpdated', task)
+    }
+    const descriptionChanged = ($event) =>{
+      task.description = $event.target.innerHTML
+      emit('noteUpdated', task)
+    }
+    return {
+      deleteTask, headerChanged, descriptionChanged
+    }
   }
 }
+
+
 </script>
 
 <style scoped>
 .task {
   width: 311px;
-  //height: 100px;
+//height: 100px;
   border-radius: 6px;
   background-color: #B6CEE5;
   color: #123456;

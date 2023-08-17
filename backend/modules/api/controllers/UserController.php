@@ -2,6 +2,7 @@
 
 namespace app\modules\api\controllers;
 
+use app\modules\api\interfaces\UserInterface;
 use app\modules\api\models\LoginForm;
 use app\modules\api\models\RegisterForm;
 use app\modules\api\resources\UserResource;
@@ -11,7 +12,7 @@ use yii\rest\Controller;
 use yii\web\UnauthorizedHttpException;
 use app\models\User;
 
-class UserController extends Controller
+class UserController extends Controller implements UserInterface
 {
     public function behaviors()
     {
@@ -64,10 +65,5 @@ class UserController extends Controller
     {
         $users = User::find()->all();
         return $this->asJson($users);
-    }
-
-    public function actionIndex()
-    {
-        echo 'User Controller works';
     }
 }

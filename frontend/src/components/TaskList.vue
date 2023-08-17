@@ -8,7 +8,7 @@
             alt="plus"
             style="padding-right: 9px;"
             @click="addTask">
-        
+
       </div>
     </div>
     <div class="tasks">
@@ -25,46 +25,28 @@
 
 <script>
 import Task from "@/components/Task.vue";
-import httpClient from "@/services/http.service";
+import {taskListFunctions} from '@/hooks/taskFunctions.js'
 
 export default {
-  components: {Task},
-  data() {
-    return {
-      // Заменить hard-coded таски на таски от пользователя
+  components: { Task },
+  data(){
+    return{
       tasks: []
     }
   },
-  methods: {
-    async deleteTask(task) {
-      const {status, data} = await httpClient.delete(`task/${task.id}`, {});
-      if (status === 204) {
-        this.tasks.splice(this.tasks.indexOf(task), 1)
-      }
-    },
-    async addTask(task) {
-      const {status, data} = await httpClient.post('task', {});
-      if (status === 201) {
-        this.tasks.unshift(data)
-      }
-    },
-    // Функция, которая отслеживает изменение в таске и отправляет запрос
-    async noteUpdated(task) {
-      const {status, data} = await httpClient.put(`task/${task.id}`, task);
-      if (status === 200) {
+  setup() {
+    const { tasks, deleteTask, addTask, noteUpdated } = taskListFunctions();
 
-      }
-    }
-  },
-  async mounted() {
-    const {status, data} = await httpClient.get('task');
-    if (status === 200) {
-      this.tasks = data;
-    }
+    return {
+      tasks,
+      deleteTask,
+      addTask,
+      noteUpdated
+    };
   }
+};
 
 
-}
 </script>
 
 <style scoped>
@@ -84,10 +66,10 @@ export default {
   display: flex;
   align-items: center;
 }
-.tasks{
+
+.tasks {
   display: flex;
-  //flex: 0 2 650px;
-  width: 650px;
+//flex: 0 2 650px; width: 650px;
   max-height: 100vh;
   flex-direction: column;
   flex-wrap: wrap;

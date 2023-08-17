@@ -11,9 +11,6 @@ import authService from "@/services/auth.service";
 
 export default {
   components: {NavBar},
-  // async mounted() {
-  //   this.user = await authService.getCurrentUser();
-  // }
 }
 </script>
 

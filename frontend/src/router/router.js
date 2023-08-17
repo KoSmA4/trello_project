@@ -1,6 +1,5 @@
 import {createRouter, createWebHistory} from "vue-router";
 import Client from '@/pages/Client.vue'
-import WorkingSpace from "@/pages/WorkingSpace.vue";
 import Authorization from "@/pages/Login.vue";
 import Registration from "@/pages/Registration.vue";
 import DefaultLayout from "@/layouts/DefaultLayout.vue";

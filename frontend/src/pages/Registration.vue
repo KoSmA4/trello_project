@@ -27,31 +27,24 @@
 <script>
 import MyButton from "@/components/UI/MyButton.vue";
 import MyInput from "@/components/UI/MyInput.vue";
-import authService from "@/services/auth.service";
+import {ref} from "vue";
+import {userAuthorization} from "@/hooks/authorization";
 
 export default {
   components: {MyInput, MyButton},
-  data() {
+  setup() {
+    const form = ref({
+      username: "",
+      password: "",
+      password_repeat: '',
+    });
+    const {registration, errors} = userAuthorization(form);
     return {
-      form: {
-        username: '',
-        password: '',
-        password_repeat: '',
-      },
-      errors: null
+      form,
+      errors,
+      registration
     };
-  },
-  methods: {
-    async registration() {
-      const {success, errors} = await authService.register(this.form);
-      if (success) {
-        this.$router.push({name: 'home'})
-      } else {
-        this.errors = errors;
-      }
-    },
-  },
-
+  }
 }
 </script>
 
