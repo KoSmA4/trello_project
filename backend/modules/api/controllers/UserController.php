@@ -2,18 +2,23 @@
 
 namespace app\modules\api\controllers;
 
+use app\models\Task;
 use app\modules\api\interfaces\UserInterface;
 use app\modules\api\models\LoginForm;
 use app\modules\api\models\RegisterForm;
 use app\modules\api\resources\UserResource;
 use Yii;
+use yii\filters\AccessControl;
+use yii\filters\auth\HttpBearerAuth;
 use yii\filters\Cors;
 use yii\rest\Controller;
+use yii\web\NotFoundHttpException;
 use yii\web\UnauthorizedHttpException;
 use app\models\User;
 
 class UserController extends Controller implements UserInterface
 {
+
     public function behaviors()
     {
         return array_merge(parent::behaviors(), [
@@ -65,5 +70,32 @@ class UserController extends Controller implements UserInterface
     {
         $users = User::find()->all();
         return $this->asJson($users);
+    }
+
+    public function actionChangeUserExecutor($userId, $taskId, $newExecutorId)
+    {
+        $user = User::findOne($userId);
+        if (!$user) {
+            throw new NotFoundHttpException('User not found');
+        }
+
+        $task = Task::findOne(['id' => $taskId, 'created_by' => $user->id]);
+        if (!$task) {
+            throw new NotFoundHttpException('Task not found');
+        }
+
+        $newExecutor = User::findOne($newExecutorId);
+        if (!$newExecutor) {
+            throw new NotFoundHttpException('New executor not found');
+        }
+
+        $task->created_by = $newExecutor->id;
+
+        if ($task->save()) {
+            return ['message' => 'Executor of the task has been changed successfully'];
+        } else {
+            Yii::$app->response->statusCode = 422;
+            return ['errors' => $task->errors];
+        }
     }
 }

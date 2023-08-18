@@ -27,6 +27,7 @@
 import NavBar from "@/App.vue";
 import {userFunction} from "@/hooks/userFunctions";
 
+
 export default {
   components: {NavBar},
   data() {
@@ -37,6 +38,8 @@ export default {
 
   setup(){
     const {users} = userFunction();
+
+
     return {
       users
     };

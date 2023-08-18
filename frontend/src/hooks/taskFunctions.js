@@ -1,33 +1,28 @@
-// import httpClient from "@/services/http.service";
-// import axios from "axios";
-// import {onMounted, ref} from "vue";
-//
-// // export function deleteTask(task){
-// //     const {status, data} = await httpClient.delete(`task/${task.id}`, {});
-// //       if (status === 204) {
-// //         this.tasks.splice(this.tasks.indexOf(task), 1)
-// //       }
-// // }
-//
-// export function taskListFunctions() {
-//     const tasks = ref([])
-//     const getPosts = async () => {
-//         const {status, data} = await httpClient.get('task');
-//         if (status === 200) {
-//
-//             tasks.value = data;debugger
-//         }
-//         return tasks
-//     }
-//     onMounted(getPosts)
-//     return getPosts
-// }
-
 import httpClient from "@/services/http.service";
 import {onMounted, ref} from "vue";
 
 export function taskListFunctions() {
     const tasks = ref([])
+    const transferNoteToUser = async (currentUserID, taskId, newUserId, accessToken) => {
+        try {
+            const response = await httpClient.put(
+                `user/change-user-executor/${currentUserID}/${taskId}/${newUserId}`,
+                {},
+                // {
+                //   headers: {
+                //     Authorization: `Bearer ${accessToken}`,
+                //   },
+                // }
+            );
+
+            if (response.status === 200) {
+                console.log('Task user changed successfully');
+            }
+        } catch (error) {
+            console.error('Error changing task user:', error);
+        }
+    };
+
     const deleteTask = async task => {
         const { status } = await httpClient.delete(`task/${task.value.task.id}`, {});
         if (status === 204) {
@@ -59,6 +54,7 @@ export function taskListFunctions() {
         tasks,
         deleteTask,
         addTask,
-        noteUpdated
+        noteUpdated,
+        transferNoteToUser
     };
 }

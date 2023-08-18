@@ -47,7 +47,6 @@ $config = [
             ],
         ],
         'db' => $db,
-        // Настройка ЧПУ
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
@@ -56,7 +55,16 @@ $config = [
                     'class' => \yii\rest\UrlRule::class,
                     'pluralize' => false,
                     'controller' => ['api/task'],
-                ]
+                ],
+                [
+                    'class' => \yii\rest\UrlRule::class,
+                    'pluralize' => false,
+                    'controller' => ['api/user'],
+                    'extraPatterns' => [
+                        'PUT change-user-executor/<userId:\d+>/<taskId:\d+>/<newExecutorId:\d+>' => 'change-user-executor',
+                    ],
+                ],
+
             ],
         ],
 

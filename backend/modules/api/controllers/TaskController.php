@@ -2,12 +2,12 @@
 
 namespace app\modules\api\controllers;
 
-use app\models\Task;
 use app\modules\api\resources\TaskResource;
 use yii\data\ActiveDataProvider;
 use yii\filters\auth\HttpBearerAuth;
 use yii\filters\Cors;
 use yii\rest\ActiveController;
+
 
 class TaskController extends ActiveController
 {
@@ -21,7 +21,7 @@ class TaskController extends ActiveController
         ];
         $behaviors['authenticator']['except'] = ['options'];
         $behaviors['cors'] = [
-            'class' => Cors::class
+            'class' => Cors::class,
         ];
         return $behaviors;
     }
@@ -32,10 +32,17 @@ class TaskController extends ActiveController
         $actions['index']['prepareDataProvider'] = [$this, 'prepareDataProvider'];
         return $actions;
     }
+
     public function prepareDataProvider()
     {
         return new ActiveDataProvider([
             'query' => $this->modelClass::find()->byUser(\Yii::$app->user->id)
         ]);
+    }
+
+    public
+    function actionIndex()
+    {
+        echo "Test controller works";
     }
 }
