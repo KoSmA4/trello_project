@@ -6,7 +6,7 @@
         <img
             src="@/images/plus.svg"
             alt="plus"
-            style="padding-right: 9px;"
+            style="padding-right: 9px; cursor: pointer;"
             @click="addTask">
 
       </div>

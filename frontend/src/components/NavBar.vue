@@ -41,6 +41,10 @@ export default {
   color: #f1f1f1;
 }
 
+.navbar__greetings {
+  padding-left: 5px;
+}
+
 .navbar__btns {
   display: flex;
   align-items: center;
